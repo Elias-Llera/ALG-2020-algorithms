@@ -29,7 +29,7 @@ public class MatrixOperations {
 			}
 			System.out.println();
 		}
-	}
+	} 
 
 	public int sumDiagonal1() {
 		int addition = 0;
