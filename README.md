@@ -5,3 +5,5 @@ Repository for the Algorithmics course at the School of Computer Engineering of 
 **Student**: Elías Llera García-Riaño
 
 **Year**: 2020
+
+**Email**: uo271407@uniovi.es
