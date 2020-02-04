@@ -53,17 +53,27 @@ public class MatrixOperations {
 
 	public void travelPath(int i, int j) {
 		int numOfMoves = 0;
-		while (i >= 0 && j >= 0 && i < getSize() && j < getSize()) {
+		boolean traversed = false;
+		while (i >= 0 && j >= 0 && i < getSize() && j < getSize() && !traversed) {
 			switch (matrix[i][j]) {
 			case 1:
+				matrix[i][j]=-1;
 				i--;
+				break;
 			case 2:
+				matrix[i][j]=-1;
 				j++;
+				break;
 			case 3:
+				matrix[i][j]=-1;
 				i++;
+				break;
 			case 4:
+				matrix[i][j]=-1;
 				j--;
+				break;
 			default:
+				traversed = true;
 				break;
 			}
 			numOfMoves++;
