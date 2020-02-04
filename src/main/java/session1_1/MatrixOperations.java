@@ -1,5 +1,7 @@
 package session1_1;
 
+import java.util.Random;
+
 public class MatrixOperations {
 
 	private int[][] matrix;
@@ -8,7 +10,7 @@ public class MatrixOperations {
 		matrix = new int[n][n];
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[i].length; j++) {
-				matrix[i][j] = (int) (Math.random() * 3) + 1;
+				matrix[i][j] = new Random().nextInt(4);
 			}
 		}
 	}
