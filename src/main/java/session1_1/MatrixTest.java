@@ -1,6 +1,6 @@
 package session1_1;
 
-public class MainMatrix {
+public class MatrixTest {
 
 	public static void main(String[] args) {
 		MatrixOperations mo = new MatrixOperations(4);

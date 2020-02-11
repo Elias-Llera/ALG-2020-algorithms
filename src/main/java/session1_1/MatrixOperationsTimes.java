@@ -36,7 +36,6 @@ public class MatrixOperationsTimes {
 	private static void measureSumDiagonal2(int nTimes) {
 		for (int i = 10; i < Integer.MAX_VALUE; i *= 3) {
 			MatrixOperations mo = new MatrixOperations(i);
-
 			long t1, t2;
 			int s = 0;
 			t1 = System.currentTimeMillis();
@@ -44,8 +43,9 @@ public class MatrixOperationsTimes {
 				s = mo.sumDiagonal2();
 			}
 			t2 = System.currentTimeMillis();
-
+			
 			System.out.println(String.format("METHOD 2:: SIZE = %d ** TIME = %d ms and the sum is %d", i, t2 - t1, s));
 		}
 	}
+	
 }
