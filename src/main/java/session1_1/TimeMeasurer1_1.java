@@ -13,11 +13,11 @@ public class TimeMeasurer1_1 {
 		} catch (OutOfMemoryError e) {
 			e.printStackTrace();
 		}
-//		try {
-//			measureDiagonal2(nTimes);
-//		} catch (OutOfMemoryError e) {
-//			e.printStackTrace();
-//		}
+		try {
+			measureDiagonal2(nTimes);
+		} catch (OutOfMemoryError e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private static void measureDiagonal1(int nTimes) {
