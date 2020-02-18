@@ -3,7 +3,8 @@ package session1_1;
 public class Vector2 {
 
 	public static void main (String[] args) {
-		int n = Integer.parseInt(args[0]);
+		//int n = Integer.parseInt(args[0]);
+		int n = 200000000;
 		int[] v = new int[n];
 		Vector1.fillIn(v);
 		
