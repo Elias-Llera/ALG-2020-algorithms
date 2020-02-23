@@ -15,17 +15,17 @@ public class SortingTests {
 	public static void main(String arg []) {
 		int n = 8;  //problem size
 		
-//		testSortingAlgorithm(new Insertion(n));
-//		
-//		testSortingAlgorithm(new Selection(n));
+		testSortingAlgorithm(new Insertion(n));
 		
-//		testSortingAlgorithm(new Bubble(n));
+		testSortingAlgorithm(new Selection(n));
 		
-//		testSortingAlgorithm(new QuicksortFateful(n));
-//		
+		testSortingAlgorithm(new Bubble(n));
+		
+		testSortingAlgorithm(new QuicksortFateful(n));
+		
 		testSortingAlgorithm(new QuicksortCentralElement(n));
-//		
-//		testSortingAlgorithm(new QuicksortMedianOfThree(n));
+		
+		testSortingAlgorithm(new QuicksortMedianOfThree(n));
 	}
 	
 	public static void testSortingAlgorithm(Vector v) {
