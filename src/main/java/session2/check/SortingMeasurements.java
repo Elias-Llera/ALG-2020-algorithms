@@ -14,7 +14,7 @@ import session2.Vector;
 public class SortingMeasurements {
 	private static int differentSizes = 15; // how many sizes do you want to use in the measurements
 	private static int nTimes = 1; // number of repetitions of the executions
-	private static String option = "sorted";
+	private static String option = "random";
 
 	/**
 	 * This program could be used to test all the sorting algorithms
