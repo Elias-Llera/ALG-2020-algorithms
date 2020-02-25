@@ -14,7 +14,7 @@ public class QuicksortCentralElement extends Vector {
 		int pivot;
 
 		if (left < right) {
-			pivot = (right - left) / 2;
+			pivot = left + (right - left) / 2;
 			interchange(pivot, right);
 			
 			do {

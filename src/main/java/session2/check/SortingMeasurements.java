@@ -53,21 +53,23 @@ public class SortingMeasurements {
 			System.out.println("\n\nTime Measurement: " + v.getName());
 			for (int n : iterations) {
 				v.inicialize(n);
-				if (option.compareTo("sorted") == 0)
-					v.directlySorted();
-				else if (option.compareTo("inverse") == 0)
-					v.inverselySorted();
-				else
-					v.randomlySorted();
-
-				t1 = System.currentTimeMillis();
-				for (int repetitions = 1; repetitions <= nTimes; repetitions++) {
-					v.sort();
-				}
-				t2 = System.currentTimeMillis();
 				
-				pw.println(t2-t1);
-				System.out.println("n=" + n + "**TIME=" + (t2 - t1));
+				int total = 0;
+				for (int repetitions = 1; repetitions <= nTimes; repetitions++) {
+					if (option.compareTo("sorted") == 0)
+						v.directlySorted();
+					else if (option.compareTo("inverse") == 0)
+						v.inverselySorted();
+					else
+						v.randomlySorted();
+					t1 = System.currentTimeMillis();
+					v.sort();
+					t2 = System.currentTimeMillis();
+					total+= t2-t1;
+				}
+				
+				pw.println(total);
+				System.out.println("n=" + n + "**TIME=" + (total));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
