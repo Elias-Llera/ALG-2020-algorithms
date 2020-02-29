@@ -5,13 +5,13 @@ package session3.gilito;
  * challenges us to improve it for free (the usurer does not plan to pay us
  * anything)
  */
-public class Gilito2 {
+public class Gilito3 {
 	private int[] coins; // weight in grams of the n coins
 	private long watts; // average energy consumed (watts)
 	public static int REAL_WEIGHT = 1000;
 	public static int FAKE_WEIGHT = 999;
 
-	public Gilito2(int n) {
+	public Gilito3(int n) {
 		this.coins = new int[n];
 	}
 
@@ -38,6 +38,8 @@ public class Gilito2 {
 		watts++; // 1 watts used
 
 		int leftWeight = 0; // weight of left plate
+		int nCoinsL = leftMax - leftMin + 1;
+		int nCoinsR = rightMax - rightMin + 1;
 		for (int i = leftMin; i <= leftMax; i++)
 			leftWeight += this.coins[i];
 
@@ -45,9 +47,9 @@ public class Gilito2 {
 		for (int i = rightMin; i <= rightMax; i++)
 			rightWeight += this.coins[i];
 
-		if (leftWeight < rightWeight)
+		if (leftWeight < nCoinsL * REAL_WEIGHT)
 			return 1;
-		if (leftWeight > rightWeight)
+		if (rightWeight < nCoinsR * REAL_WEIGHT)
 			return 2;
 		return 3;
 	}
@@ -67,12 +69,7 @@ public class Gilito2 {
 
 	private int calculateRec(int l, int r) {
 		int mid = (l + r) / 2;
-		int balance;
-		if ((r - l + 1) % 2 == 0)
-			balance = balance(l, mid, mid + 1, r);
-		else { 
-			balance = balance(l, mid, mid, r);
-		}
+		int balance = balance(l, mid, mid + 1, r);
 
 		if (balance == 1) {
 			if (l + 1 == r) {
@@ -89,13 +86,13 @@ public class Gilito2 {
 			}
 
 		else // balance == 3
-			return mid;
+			throw new RuntimeException();
 	}
 
 	public static void main(String arg[]) {
 		// int n = Integer.parseInt(arg[0]); // number of coins (size of the problem)
-		int n = 10;
-		Gilito2 gilito = new Gilito2(n);
+		int n = 5;
+		Gilito3 gilito = new Gilito3(n);
 
 		// let's simulate the n possible cases - false currency in each position
 		for (int i = 0; i < n; i++) {
