@@ -5,13 +5,13 @@ package session3.gilito;
  * challenges us to improve it for free (the usurer does not plan to pay us
  * anything)
  */
-public class Gilito3 {
+public class GilitoThreads {
 	private int[] coins; // weight in grams of the n coins
 	private long watts; // average energy consumed (watts)
 	public static int REAL_WEIGHT = 1000;
 	public static int FAKE_WEIGHT = 999;
 
-	public Gilito3(int n) {
+	public GilitoThreads(int n) {
 		this.coins = new int[n];
 	}
 
@@ -34,25 +34,7 @@ public class Gilito3 {
 	 * @return 1 if left side is less heavy, 2 if right side is less heavy and 3 if
 	 *         they weigh the same
 	 */
-	public int balance(int leftMin, int leftMax, int rightMin, int rightMax) {
-		watts++; // 1 watts used
-
-		int leftWeight = 0; // weight of left plate
-		int nCoinsL = leftMax - leftMin + 1;
-		int nCoinsR = rightMax - rightMin + 1;
-		for (int i = leftMin; i <= leftMax; i++)
-			leftWeight += this.coins[i];
-
-		int rightWeight = 0; // weight of right plate
-		for (int i = rightMin; i <= rightMax; i++)
-			rightWeight += this.coins[i];
-
-		if (leftWeight < nCoinsL * REAL_WEIGHT)
-			return 1;
-		if (rightWeight < nCoinsR * REAL_WEIGHT)
-			return 2;
-		return 3;
-	}
+	
 
 	/**
 	 * Improved algorithm
@@ -69,30 +51,61 @@ public class Gilito3 {
 
 	private int calculateRec(int l, int r) {
 		int mid = (l + r) / 2;
-		int balance = balance(l, mid, mid + 1, r);
+		int weightRight, weightLeft;
+		MyThread threadL, threadR;
+		if ((r - l + 1) % 2 == 0) { //number of coins is even
+			threadL = new MyThread(l, mid);
+			threadR = new MyThread(mid+1, r);
+			threadL.start();
+			threadR.start();
+			try {
+				threadL.join();
+				threadR.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			weightRight = threadL.getWeight(); 
+			weightLeft = threadR.getWeight();
+		}
+		else { //number of coins is odd
+			threadL = new MyThread(l, mid);
+			threadR = new MyThread(mid, r);
+			threadL.start();
+			threadR.start();
+			try {
+				threadL.join();
+				threadR.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			weightRight = threadL.getWeight(); 
+			weightLeft = threadR.getWeight();
+		}
 
-		if (balance == 1) {
-			if (l + 1 == r) {
+		if (weightLeft > weightRight) {		//fake coin is in first half
+			if (l + 1 == r) { //if there is only one or two coins, we finished
 				return l;
 			} else {
-				return calculateRec(l, mid);
+				return calculateRec(l, mid); //weight first half now
 			}
 
-		} else if (balance == 2)
-			if (l + 1 == r) {
+		} else if (weightLeft < weightRight)	//fake coin is in the second half
+			if (l + 1 == r) {	//if there is only one or two coins, we finished
 				return r;
 			} else {
-				return calculateRec(mid + 1, r);
+				return calculateRec(mid + 1, r); //weight second half now
 			}
 
-		else // balance == 3
-			throw new RuntimeException();
+		else // balance == 3 
+			return mid;	//fake coin is in the shared coin between two halves (middle one)
 	}
 
 	public static void main(String arg[]) {
 		// int n = Integer.parseInt(arg[0]); // number of coins (size of the problem)
-		int n = 5;
-		Gilito3 gilito = new Gilito3(n);
+		int n = 10;
+		GilitoThreads gilito = new GilitoThreads(n);
 
 		// let's simulate the n possible cases - false currency in each position
 		for (int i = 0; i < n; i++) {
@@ -104,4 +117,28 @@ public class Gilito3 {
 		System.out.println("COINS=" + n + " ***AVERAGE ENERGY=" + gilito.getUsedWatts() / n + " watts");
 	}
 
+	
+	class MyThread extends Thread{
+		private int l, r, weight;
+		public MyThread(int l, int r) {
+			this.l = l;
+			this.r = r;
+			}
+		@Override
+		public void run() {
+			balance();
+		}
+		public void balance() {
+			watts++; // 1 watts used
+
+			int weight = 0; // weight of left plate
+			for (int i = l; i <= r; i++)
+				weight += coins[i];
+
+			this.weight = weight;
+		}
+		public int getWeight() {
+			return weight;
+		}
+	}
 }

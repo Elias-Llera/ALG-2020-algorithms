@@ -5,13 +5,13 @@ package session3.gilito;
  * challenges us to improve it for free (the usurer does not plan to pay us
  * anything)
  */
-public class Gilito2 {
+public class GilitoThreads2 {
 	private int[] coins; // weight in grams of the n coins
 	private long watts; // average energy consumed (watts)
 	public static int REAL_WEIGHT = 1000;
 	public static int FAKE_WEIGHT = 999;
 
-	public Gilito2(int n) {
+	public GilitoThreads2(int n) {
 		this.coins = new int[n];
 	}
 
@@ -68,34 +68,34 @@ public class Gilito2 {
 	private int calculateRec(int l, int r) {
 		int mid = (l + r) / 2;
 		int balance;
-		if ((r - l + 1) % 2 == 0) // number of coins is even
+		if ((r - l + 1) % 2 == 0) //number of coins is even
 			balance = balance(l, mid, mid + 1, r);
-		else {
-			balance = balance(l, mid, mid, r);// number of coins is odd
+		else { 
+			balance = balance(l, mid, mid, r);//number of coins is odd
 		}
 
-		if (balance == 1) { // fake coin is in first half
-			if (l + 1 == r) { // if there is only one or two coins, we finished
+		if (balance == 1) {		//fake coin is in first half
+			if (l + 1 == r) { //if there is only one or two coins, we finished
 				return l;
 			} else {
-				return calculateRec(l, mid - 1); // weight first half now
+				return calculateRec(l, mid); //weight first half now
 			}
 
-		} else if (balance == 2) // fake coin is in the second half
-			if (l + 1 == r) { // if there is only one or two coins, we finished
+		} else if (balance == 2)	//fake coin is in the second half
+			if (l + 1 == r) {	//if there is only one or two coins, we finished
 				return r;
 			} else {
-				return calculateRec(mid + 1, r); // weight second half now
+				return calculateRec(mid + 1, r); //weight second half now
 			}
 
-		else // balance == 3
-			return mid; // fake coin is in the shared coin between two halves (middle one)
+		else // balance == 3 
+			return mid;	//fake coin is in the shared coin between two halves (middle one)
 	}
 
 	public static void main(String arg[]) {
 		// int n = Integer.parseInt(arg[0]); // number of coins (size of the problem)
 		int n = 10;
-		Gilito2 gilito = new Gilito2(n);
+		GilitoThreads2 gilito = new GilitoThreads2(n);
 
 		// let's simulate the n possible cases - false currency in each position
 		for (int i = 0; i < n; i++) {
@@ -105,6 +105,29 @@ public class Gilito2 {
 			gilito.calculate();
 		}
 		System.out.println("COINS=" + n + " ***AVERAGE ENERGY=" + gilito.getUsedWatts() / n + " watts");
+	}
+	class MyThread extends Thread{
+		private int l, r, weight;
+		public MyThread(int l, int r) {
+			this.l = l;
+			this.r = r;
+			}
+		@Override
+		public void run() {
+			balance();
+		}
+		public void balance() {
+			watts++; // 1 watts used
+
+			int weight = 0; // weight of left plate
+			for (int i = l; i <= r; i++)
+				weight += coins[i];
+
+			this.weight = weight;
+		}
+		public int getWeight() {
+			return weight;
+		}
 	}
 
 }

@@ -2,7 +2,7 @@ package session3.gilito;
 
 import java.util.Random;
 
-public class GilitoComparison {
+public class GilitoComparisonThreads {
 	public static void main(String arg[]) {
 		Random r = new Random();
 		int nTimes = 10;
@@ -11,8 +11,8 @@ public class GilitoComparison {
 		int position2 = 0;
 		
 		for (int n = 10; n < Integer.MAX_VALUE; n *= 2) {
-			Gilito1 gilito1 = new Gilito1(n);
-			Gilito2 gilito2 = new Gilito2(n);
+			Gilito2 gilito1 = new Gilito2(n);
+			GilitoThreads gilito2 = new GilitoThreads(n);
 			for (int i = 0; i < n; i++) {
 				gilito1.setCoinWeight(i, Gilito1.REAL_WEIGHT); // authentic coins placed
 				gilito2.setCoinWeight(i, Gilito1.REAL_WEIGHT);
