@@ -1,0 +1,17 @@
+4
+0	1	5	2
+1	0	4	6
+5	4	0	3
+2	6	3	0
+
+The cost of the cycle calculated with Greedy1 is 10
+The nodes of the cycle are:
+0 -- 1 -- 2 -- 3 -- 0
+
+The cost of the cycle calculated with Greedy2 is 10
+The nodes of the cycle are:
+0 -- 1 -- 2 -- 3 -- 0
+
+The cost of the optimal cycle calculated with Backtracking is 10
+The Hamiltonian cycle is:
+0 -- 1 -- 2 -- 3 -- 0 -- 

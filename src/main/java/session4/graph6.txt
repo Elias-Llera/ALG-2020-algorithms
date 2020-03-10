@@ -1,0 +1,28 @@
+10
+0	37	88	98	62	55	71	82	70	1	
+37	0	93	83	1	9	87	30	97	45	
+88	93	0	10	7	77	59	96	88	91	
+98	83	10	0	19	59	29	64	8	79	
+62	1	7	19	0	47	40	64	51	70	
+55	9	77	59	47	0	6	9	55	96	
+71	87	59	29	40	6	0	99	14	80	
+82	30	96	64	64	9	99	0	79	40	
+70	97	88	8	51	55	14	79	0	14	
+1	45	91	79	70	96	80	40	14	0	
+
+The cost of the cycle calculated with Greedy1 is 237
+The nodes of the cycle are:
+0 -- 9 -- 8 -- 3 -- 2 -- 4 -- 1 -- 5 -- 6 -- 7 -- 0
+
+The cost of the cycle calculated with Greedy2 is 133
+The nodes of the cycle are:
+0 -- 1 -- 4 -- 2 -- 3 -- 8 -- 6 -- 5 -- 7 -- 9 -- 0
+
+The cost of the optimal cycle calculated with Backtracking is 133
+The Hamiltonian cycle is:
+0 -- 1 -- 4 -- 2 -- 3 -- 8 -- 6 -- 5 -- 7 -- 9 -- 0
+
+The cost of the cycle calculated with Greedy1All is 133
+The nodes of the cycle are:
+1 -- 4 -- 2 -- 3 -- 8 -- 6 -- 5 -- 7 -- 9 -- 0 -- 1
+
