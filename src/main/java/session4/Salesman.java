@@ -5,14 +5,47 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class Salesman {
+	
+	public static final int CLOSE_NODE_HEURISTIC = 0;
+	public static final int SHORT_EDGE_HEURISTIC = 1;
+	
 	private int nNodes; // number of nodes of the graph
 	private int[][] matrix; // graph adjacency matrix
 	private int[] sol; // solution path from the source node to the source node again
 
 	public static void main(String[] args) {
+		int heuristic = Integer.parseInt(args[0]);
+		int numPlaces = Integer.parseInt(args[1]);
+		int distMax = Integer.parseInt(args[2]);
+		String inputFile = args[3];
+		travel(heuristic, numPlaces, distMax, inputFile);
+	}
+	
+	public static void travel(int heuristic, int numPlaces, int distMax, String inputFile) {
+		Salesman s;
+		int result;
+		
+		try{
+			s = new Salesman(inputFile);
+		} catch(Exception e){
+			System.out.println("ERROR: unable to load the file - " + e.getMessage());
+			s = new Salesman(numPlaces, distMax);
+		}
+		
+		if (heuristic == CLOSE_NODE_HEURISTIC) {
+			result = s.greedy1(0);
+		}else {
+			result = s.greedy2();
+		}
+		
+		for(Integer i : s.sol) {
+			System.out.println(i + " ->");
+		}
+		System.out.println("Cost = " + result);
 	}
 
 	/**
@@ -133,29 +166,28 @@ public class Salesman {
 	 *         the other nodes once
 	 */
 	public int greedy1(int sourceNode) {
-		int result = 0, currentNode, minEdge;
+		int result = 0, minIndex, minValue; // values to work with
 
-		ArrayList<Integer> visited = new ArrayList<Integer>();
-		visited.add(sourceNode);
+		boolean visited[] = new boolean[nNodes]; // array to check if a node has already been visited
+		visited[sourceNode] = true;
 
-		while (visited.size() < nNodes) {
-			currentNode = visited.get(visited.size() - 1);
-			minEdge = 0;	//this cannot be initialized at 0 pedazo de subnormal
-			for (int j = 0; j < nNodes; j++) {
-				if (matrix[currentNode][j] < matrix[currentNode][minEdge] && !visited.contains(j))
-					minEdge = j;
+		for (int i = 1; i < nNodes; i++) { // for every node
+			minIndex = -1;
+			minValue = Integer.MAX_VALUE;
+			for (int j = 0; j < nNodes; j++) { // for every edge going out of the node
+				if (matrix[sol[i - 1]][j] < minValue && !visited[j]) { // if weight from last visited node to candidate
+																		// is less than previous
+					minIndex = j; // found new minimum
+					minValue = matrix[sol[i - 1]][j];
+				}
 			}
-			visited.add(minEdge);
-			result+=matrix[currentNode][minEdge];
+			sol[i] = minIndex; // add the min to the solution
+			visited[minIndex] = true; // set the newly added node as visited
+			result += minValue; // update the total weight
 		}
-		
-		result+= matrix[visited.get(visited.size()-1)][sourceNode];
-		visited.add(sourceNode);
-		
-		for (int i = 0; i < visited.size(); i++) {
-			sol[i] = visited.get(i);
-		}
-		
+		result += matrix[sol[sol.length - 2]][sourceNode]; // add the source node to finish the path
+		sol[sol.length - 1] = sourceNode;
+
 		return result;
 	}
 
@@ -168,7 +200,22 @@ public class Salesman {
 	 *         the other nodes once
 	 */
 	public int greedy2() {
-		// TODO
+		ArrayList<Edge> edges = new ArrayList<>();
+		for (int i = 0; i < nNodes; i++) {
+			for (int j = 0; j < nNodes; j++) {
+				if (i != j) {
+					edges.add(new Edge(j, j, matrix[i][j]));
+				}
+			}
+		}
+		Collections.sort(edges);
+		
+		Component graph = new Component(nNodes);
+		
+		while(!graph.onlyOneConnectedComponent()) {
+			
+		}
+
 		return 0;
 	}
 
