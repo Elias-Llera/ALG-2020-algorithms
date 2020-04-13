@@ -21,7 +21,7 @@ public class BoggleTest {
 	
 	@Test
 	public void testCase02() {
-		String dictionaryFileName = "src/main/java/labs/session6/boggle/dictionary80368.txt";
+		String dictionaryFileName = "src/main/java/session6/boggle/dictionary80368.txt";
 		String tableFileName = "src/main/java/session6/boggle/table02.txt";
 				
     	Boggle problem = new Boggle(dictionaryFileName, tableFileName);
@@ -147,39 +147,39 @@ public class BoggleTest {
     	assertEquals(349, problem.getTotalPoints());
 	}
 	
-//	@Test
-//	public void testCase205_2() {
-//		String dictionaryFileName = "src/main/java/session6/boggle/dictionary80368.txt";
-//		String tableFileName = "src/main/java/session6/boggle/table205.txt";
-//				
-//    	Boggle problem = new Boggle(dictionaryFileName, tableFileName);
-//    	
-//    	problem.printTable();
-//    	problem.findSolutions();
-//    	problem.printSolutions();
-//    	
-//    	assertEquals(32650, problem.getSolutions().size());
-//    	assertEquals("zorils", problem.getSolutions().get(32631));
-//    	assertEquals(282921, problem.getTotalPoints());
-//	}
-//	
-//	
-//	@Test
-//	public void testCase500() {
-//		String dictionaryFileName = "src/main/java/session6/boggle/dictionary80368.txt";
-//		String tableFileName = "src/main/java/session6/boggle/table500.txt";
-//				
-//    	Boggle problem = new Boggle(dictionaryFileName, tableFileName);
-//    	
-//    	problem.printTable();
-//    	problem.findSolutions();
-//    	problem.printSolutions();
-//    	
-//    	assertEquals(58368, problem.getSolutions().size());
-//    	assertEquals("zymase", problem.getSolutions().get(58355));
-//    	assertEquals(603192, problem.getTotalPoints());
-//	}
-//	
+	@Test
+	public void testCase205_2() {
+		String dictionaryFileName = "src/main/java/session6/boggle/dictionary80368.txt";
+		String tableFileName = "src/main/java/session6/boggle/table205.txt";
+				
+    	Boggle problem = new Boggle(dictionaryFileName, tableFileName);
+    	
+    	problem.printTable();
+    	problem.findSolutions();
+    	problem.printSolutions();
+    	
+    	assertEquals(32650, problem.getSolutions().size());
+    	assertEquals("zorils", problem.getSolutions().get(32631));
+    	assertEquals(282921, problem.getTotalPoints());
+	}
+	
+	
+	@Test
+	public void testCase500() {
+		String dictionaryFileName = "src/main/java/session6/boggle/dictionary80368.txt";
+		String tableFileName = "src/main/java/session6/boggle/table500.txt";
+				
+    	Boggle problem = new Boggle(dictionaryFileName, tableFileName);
+    	
+    	problem.printTable();
+    	problem.findSolutions();
+    	problem.printSolutions();
+    	
+    	assertEquals(58368, problem.getSolutions().size());
+    	assertEquals("zymase", problem.getSolutions().get(58355));
+    	assertEquals(603192, problem.getTotalPoints());
+	}
+	
 //	@Test
 //	public void testCase1000() {
 //		String dictionaryFileName = "src/main/java/session6/boggle/dictionary80368.txt";

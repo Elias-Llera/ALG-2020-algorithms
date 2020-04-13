@@ -21,6 +21,7 @@ public class Boggle {
 	int[] movementI = new int[] { 0, 1, 1, 1, 0, -1, -1, -1 };
 	int[] movementJ = new int[] { 1, 1, 0, -1, -1, -1, 0, 1 };
 	HashSet<String> solutions = new HashSet<String>();
+	HashSet<String> impossibleCombinations = new HashSet<String>();
 	ArrayList<String> dictionary;
 	Hashtable<Character, Integer> indexes = new Hashtable<Character, Integer>();
 	long points;
@@ -127,7 +128,7 @@ public class Boggle {
 		try {
 			reader = new BufferedReader(new FileReader(fileName));
 			while (reader.ready()) {
-				line = reader.readLine();
+				line = reader.readLine().toLowerCase();
 				if (line.charAt(0) != letter) { // first letter is different
 					letter = line.charAt(0); // update the current letter
 					indexes.put(letter, position); // add the index of the new letter
@@ -144,7 +145,7 @@ public class Boggle {
 		table = new char[size][size];
 		for (int i = 0; i < table.length; i++) {
 			for (int j = 0; j < table.length; j++) {
-				table[i][j] = (char) (new Random().nextInt(26) + 'A');
+				table[i][j] = (char) (new Random().nextInt(26) + 'a');
 			}
 		}
 	}
@@ -152,22 +153,25 @@ public class Boggle {
 	private int search() {
 		char startingLetter = word.charAt(0);
 
-		if (!indexes.containsKey(startingLetter)) { // There is no word starting with that letter
+		if (!indexes.containsKey(startingLetter) || impossibleCombinations.contains(word)) { // There is no word
+																								// starting with that
+																								// letter
 			return IMPOSSIBLE_WORD;
 		}
 
 		int startPosition = indexes.get(startingLetter); // index of the starting letter of the word
-		int i = startPosition;
 
-		while (dictionary.get(i).charAt(0) == word.charAt(0) && i < dictionary.size() - 1) {
+		for (int i = startPosition; i < dictionary.size(); i++) {
+			if (dictionary.get(i).charAt(0) != word.charAt(0)) {
+				break;
+			}
 			if (dictionary.get(i).compareTo(word) == 0) { // word found
 				return FOUND;
 			} else if (dictionary.get(i).startsWith(word)) { // We did not find a word, but it may exist
 				return NOT_FOUND;
 			}
-			i++;
 		}
-
+		impossibleCombinations.add(word);
 		return IMPOSSIBLE_WORD;
 	}
 
